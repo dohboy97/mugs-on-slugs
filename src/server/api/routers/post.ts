@@ -8,7 +8,7 @@ import {
 
 let post = {
   id: 1,
-  name: "Hello World",
+  name: "Hello",
 };
 
 export const postRouter = createTRPCRouter({
