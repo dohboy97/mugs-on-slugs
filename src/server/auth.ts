@@ -42,6 +42,15 @@ export const authOptions: NextAuthOptions = {
         id: token.sub,
       },
     }),
+    signIn: async ({ user }) => {
+      //Need to figure out a way to do this w/TRPC?
+
+      // const existingUser = await User.findOne({
+      //   externalId: user.id,
+      // });
+
+      return true;
+    },
   },
   providers: [
     GoogleProvider({
