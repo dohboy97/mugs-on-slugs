@@ -6,6 +6,8 @@ import {
 import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env";
+import dbConnect from "~/lib/dbConnect";
+import User from "~/models/User";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -44,10 +46,12 @@ export const authOptions: NextAuthOptions = {
     }),
     signIn: async ({ user }) => {
       //Need to figure out a way to do this w/TRPC?
-
-      // const existingUser = await User.findOne({
-      //   externalId: user.id,
-      // });
+      await dbConnect();
+      await User.create({
+        firstName: user.name?.split(" ")[0] ?? "test",
+        lastName: user.name?.split(" ")[1] ?? "user",
+        email: user.email,
+      });
 
       return true;
     },
