@@ -47,10 +47,16 @@ export const authOptions: NextAuthOptions = {
     signIn: async ({ user }) => {
       //Need to figure out a way to do this w/TRPC?
       await dbConnect();
+      const existingUser = await User.findOne({ externalId: user.id });
+      if (existingUser) {
+        return true;
+      }
       await User.create({
         firstName: user.name?.split(" ")[0] ?? "test",
         lastName: user.name?.split(" ")[1] ?? "user",
         email: user.email,
+        externalId: user.id,
+        avatar: user.image,
       });
 
       return true;
